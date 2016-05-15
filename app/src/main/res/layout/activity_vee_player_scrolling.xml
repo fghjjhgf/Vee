@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.vee.lb.vee.activity.VeePlayerScrollingActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
+        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
+
+            <FrameLayout
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.vee.lb.vee.view.VeePlayerSurfaceView
+                    android:id="@+id/vee_player_scroling_surfaceview"
+                    android:fitsSystemWindows="true"
+                    android:layout_width="match_parent"
+                    android:clickable="true"
+                    android:layout_height="@dimen/small_surfaceview_height"
+                    />
+                <LinearLayout
+                    android:id="@+id/vee_player_volume_linearlayout"
+                    android:layout_width="@dimen/small_player_volume_linear_height"
+                    android:layout_height="@dimen/small_player_volume_linear_height"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/black_overlay"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/vee_player_volume_image"
+                        android:scaleType="centerCrop"
+                        android:layout_width="@dimen/small_player_volume_linear_image_height"
+                        android:layout_height="@dimen/small_player_volume_linear_image_height"
+                        android:background="@drawable/ic_volume"/>
+                    <TextView
+                        android:id="@+id/vee_player_volume_text"
+                        android:text="default"
+                        android:textSize="@dimen/small_player_volume_linear_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/vee_player_bright_linearlayout"
+                    android:layout_width="@dimen/small_player_volume_linear_height"
+                    android:layout_height="@dimen/small_player_volume_linear_height"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/black_overlay"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/vee_player_bright_image"
+                        android:scaleType="centerCrop"
+                        android:layout_width="@dimen/small_player_volume_linear_image_height"
+                        android:layout_height="@dimen/small_player_volume_linear_image_height"
+                        android:background="@drawable/ic_volume"/>
+                    <TextView
+                        android:id="@+id/vee_player_bright_text"
+                        android:text="default"
+                        android:textSize="@dimen/small_player_volume_linear_text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+            <LinearLayout
+                android:id="@+id/vee_player_scroling_control_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/vee_player_scroling_bofang"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/ic_media_play"/>
+                <SeekBar
+                    android:id="@+id/vee_player_scroling_seekbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
+                <ImageButton
+                    android:id="@+id/vee_player_scroling_quanping"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/ic_media_fullscreen"/>
+            </LinearLayout>
+
+
+            <!--
+                android:fitsSystemWindows="true
+                延伸到状态栏设置
+
+            <ImageView
+                android:id="@+id/testimage"
+                android:fitsSystemWindows="true"
+                android:background="@drawable/test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>-->
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                <TextView
+                    android:text="asd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_vee_player_scrolling" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_border">
+    <ImageView
+        android:id="@+id/normal_gridview_item_imageview"
+        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/normal_gridview_item_animate_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bangumi_fin_half_default_margin"
+        android:layout_marginBottom="@dimen/bangumi_fin_half_default_margin"
+        android:layout_marginLeft="@dimen/bangumi_fin_half_default_margin"
+        android:textSize="@dimen/bangumi_fin_default_textsize"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/bangumi_fin_half_default_margin"
+        android:layout_marginRight="@dimen/bangumi_fin_half_default_margin"
+        android:layout_marginBottom="@dimen/bangumi_fin_half_default_margin">
+        <TextView
+            android:id="@+id/normal_gridview_item_episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/bangumi_fin_default_textsize"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/normal_gridview_item_playnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/bangumi_fin_default_textsize"/>
+
+    </LinearLayout>
+
+</LinearLayout>

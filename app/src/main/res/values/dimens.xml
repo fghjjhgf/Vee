@@ -1,0 +1,28 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="bangumi_index_text_size">15dip</dimen>
+    <dimen name="bangumi_index_leftmargin">10dp</dimen>
+    <dimen name="bangumi_index_topmargin">5dp</dimen>
+
+    <dimen name="bangumi_fin_default_margin">10dp</dimen>
+    <dimen name="bangumi_fin_half_default_margin">5dp</dimen>
+    <dimen name="bangumi_fin_gridview_Spacing">10dp</dimen>
+    <dimen name="bangumi_fin_margin">10dp</dimen>
+    <dimen name="bangumi_fin_default_textsize">15dip</dimen>
+
+    <dimen name="news_index_item_gridview_default_margin">10dp</dimen>
+    <dimen name="news_index_item_gridview_double_default_margin">20dp</dimen>
+    <!-- VeePlayerScrollingActivity 播放器高度-->
+    <dimen name="app_bar_height">240dp</dimen>
+    <dimen name="small_surfaceview_height">240dp</dimen>
+    <dimen name="small_player_control_height">25dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="small_player_volume_linear_height">80dp</dimen>
+    <dimen name="small_player_volume_linear_image_height">50dp</dimen>
+    <dimen name="small_player_volume_linear_text_size">15dip</dimen>
+
+</resources>
