@@ -19,18 +19,20 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:fitsSystemWindows="true">
         <!--app:layout_scrollFlags="scroll|exitUntilCollapsed"-->
 
             <FrameLayout
+                android:id="@+id/vee_player_scrolling_framelayout"
                 android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.vee.lb.vee.view.VeePlayerSurfaceView
+                android:layout_height="wrap_content"
+                android:clickable="true">
+                <SurfaceView
                     android:id="@+id/vee_player_scroling_surfaceview"
                     android:fitsSystemWindows="true"
                     android:layout_width="match_parent"
-                    android:clickable="true"
                     android:layout_height="@dimen/small_surfaceview_height"
                     />
                 <LinearLayout

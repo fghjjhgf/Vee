@@ -34,37 +34,10 @@ public class VeePlayerSurfaceView extends SurfaceView {
         gestureDetector = new GestureDetector(context,new VeePlayerGestureListener());
     }
 
-    //@Override
-    //public boolean onTouchEvent(MotionEvent event) {
-    //    switch (event.getAction() & MotionEvent.ACTION_MASK){
-    //        case MotionEvent.ACTION_DOWN:
-    //            Log.d(TAG, "onTouchEvent: ACTION_DOWN");
-    //            surfaceViewListener.gesturedown(event);
-    //            break;
-    //        case MotionEvent.ACTION_MOVE:
-    //            Log.d(TAG, "onTouchEvent: ACTION_MOVE");
-    //            surfaceViewListener.gesturemove(event);
-    //            break;
-    //        case MotionEvent.ACTION_UP:
-    //            Log.d(TAG, "onTouchEvent: ACTION_UP");
-    //            surfaceViewListener.gestureup(event);
-    //            break;
-    //    }
-    //    return super.onTouchEvent(event);
-    //}
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-       if (gestureDetector.onTouchEvent(event))
-           return true;
-
-       switch (event.getAction() & MotionEvent.ACTION_MASK) {
-           case MotionEvent.ACTION_UP:
-               Log.d(TAG, "onTouchEvent: ACTION_UP");
-               break;
-       }
-        return super.onTouchEvent(event);
+        return false;
     }
 
     private class VeePlayerGestureListener extends GestureDetector.SimpleOnGestureListener {

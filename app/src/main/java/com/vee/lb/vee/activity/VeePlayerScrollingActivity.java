@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +12,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -28,7 +31,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class VeePlayerScrollingActivity extends AppCompatActivity {
     private String TAG = "VeePlayerScrollingActivity";
-    private VeePlayerSurfaceView surfaceView;
+    private SurfaceView surfaceView;
     private ImageButton playbutton;
     private ImageButton fullscreenbutton;
     private SeekBar seekBar;
@@ -41,6 +44,8 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private GestureDetector gestureDetector;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private FrameLayout frameLayout;
 
     private String remoteurl = "http://192.168.1.100/6649961-1.flv";
     private final int STATE_SEEKBAR_BUFF_UPDATE = 101;
@@ -86,13 +91,15 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     private void findview(){
         fab = (FloatingActionButton) findViewById(R.id.fab);
         seekBar = (SeekBar)findViewById(R.id.vee_player_scroling_seekbar);
-        surfaceView = (VeePlayerSurfaceView)findViewById(R.id.vee_player_scroling_surfaceview);
+        surfaceView = (SurfaceView)findViewById(R.id.vee_player_scroling_surfaceview);
         playbutton = (ImageButton)findViewById(R.id.vee_player_scroling_bofang);
         fullscreenbutton = (ImageButton)findViewById(R.id.vee_player_scroling_quanping);
         volumelinearlayout = (LinearLayout)findViewById(R.id.vee_player_volume_linearlayout);
         brightlinearlayout = (LinearLayout)findViewById(R.id.vee_player_bright_linearlayout);
         volumetextview = (TextView)findViewById(R.id.vee_player_volume_text);
         brighttextview = (TextView)findViewById(R.id.vee_player_bright_text);
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
+        frameLayout = (FrameLayout)findViewById(R.id.vee_player_scrolling_framelayout);
     }
 
     private void initialize(){
@@ -102,7 +109,7 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         volumelinearlayout.setVisibility(View.GONE);
         brightlinearlayout.setVisibility(View.GONE);
 
-        gestureDetector = new GestureDetector(this, new VeePlayerGestureListener());
+        gestureDetector = new GestureDetector(this,new VeePlayerGestureListener());
     }
 
     private void initmedia(){
@@ -165,30 +172,19 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
             }
         });
 
-        surfaceView.setSurfaceViewListener(surfaceviewlistener);
+        surfaceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d(TAG, "onTouch: ");
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        Log.d(TAG, "onTouch:ACTION_MOVE ");
+                        return true;
+                }
+                return false;
+            }
+        });
     }
-
-    //@Override
-    //public boolean onTouchEvent(MotionEvent event) {
-    //    if (gestureDetector.onTouchEvent(event))
-    //        return true;
-//
-    //    // 处理手势结束
-    //    switch (event.getAction() & MotionEvent.ACTION_MASK) {
-    //        case MotionEvent.ACTION_UP:
-    //            Log.d(TAG, "onTouchEvent: ACTION_UP");
-//
-    //            break;
-    //    }
-//
-    //    return super.onTouchEvent(event);
-    //}
-//
-    //@Override
-    //public boolean dispatchTouchEvent(MotionEvent ev) {
-//
-    //    return onTouchEvent(ev);
-    //}
 
     private VeePlayerSurfaceView.SurfaceViewListener surfaceviewlistener = new VeePlayerSurfaceView.SurfaceViewListener() {
         @Override
@@ -241,10 +237,6 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         updateseeknar = false;
         playbutton.setBackgroundResource(R.drawable.ic_media_play);
         ijkMediaPlayer.pause();
-    }
-
-    private void endGesrure(){
-
     }
 
     private final Handler myhandle = new Handler() {
@@ -401,7 +393,9 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        pause();
+        if (ijkMediaPlayer != null){
+            pause();
+        }
     }
 
     @Override

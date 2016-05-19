@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:fitsSystemWindows="true"
+    tools:context="com.vee.lb.vee.activity.VeeMainPlayerActivity">
+    <SurfaceView
+        android:id="@+id/vee_main_player_surfaceview"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/vee_main_player_top_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:background="@color/main_control_background"
+        android:layout_gravity="top">
+        <ImageButton
+            android:id="@+id/vee_main_player_backbutton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/ic_ab_back_holo_dark_am"/>
+        <TextView
+            android:id="@+id/vee_main_player_video_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/vee_main_player_backbutton"/>
+
+        <TextView
+            android:id="@+id/vee_main_player_sys_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/vee_main_player_bottom_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/main_control_background"
+        android:layout_gravity="bottom">
+        <SeekBar
+            android:id="@+id/vee_main_player_video_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/vee_main_player_playbutton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/ic_media_pause"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/vee_main_player_playtime"
+                android:text="00:00"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/vee_main_player_volume_bright_linearlayout"
+        android:layout_width="@dimen/vee_main_player_volume_linear_height"
+        android:layout_height="@dimen/vee_main_player_volume_linear_height"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="@color/black_overlay"
+        android:gravity="center"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/vee_main_player_volume_bright_image"
+            android:scaleType="centerCrop"
+            android:layout_width="@dimen/vee_main_player_volume_linear_image_height"
+            android:layout_height="@dimen/vee_main_player_volume_linear_image_height"
+            android:background="@drawable/ic_volume"/>
+        <TextView
+            android:id="@+id/vee_main_player_volume_bright_text"
+            android:text="default"
+            android:textSize="@dimen/vee_main_player_volume_linear_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</FrameLayout>
