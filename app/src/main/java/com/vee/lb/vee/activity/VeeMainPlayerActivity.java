@@ -172,9 +172,12 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        break;
                     case MotionEvent.ACTION_MOVE:
                         Log.d(TAG, "onTouch: ACTION_MOVE");
-
+                        break;
+                    case MotionEvent.ACTION_UP:
                         break;
                 }
                 return false;
@@ -309,6 +312,7 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
                         {
                             setControlStatus(View.GONE);
                             controlstatus = View.GONE;
+                            myhandle.removeMessages(UPDATE_CONTROL);
                         }else if (getControlstatus() == View.GONE){
                             controlstatus = View.VISIBLE;
                             setControlStatus(View.VISIBLE);
