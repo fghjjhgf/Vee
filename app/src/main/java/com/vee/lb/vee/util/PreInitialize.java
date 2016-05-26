@@ -24,6 +24,7 @@ public class PreInitialize {
     public static AudioManager audioManager;
     public static int maxvolume;
     public static int maxbright = 255;
+    public static int dis_of_conflict = 50;
 
     public PreInitialize(Context context) {
         this.context = context;

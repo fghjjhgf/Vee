@@ -1,11 +1,14 @@
 package com.vee.lb.vee.activity;
 
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,10 +25,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.vee.lb.vee.R;
+import com.vee.lb.vee.adapter.MainPageFragmentAdapter;
+import com.vee.lb.vee.fragment.CommentsFragment;
+import com.vee.lb.vee.fragment.VeeScrollIntroFragment;
 import com.vee.lb.vee.util.PreInitialize;
-import com.vee.lb.vee.view.VeePlayerSurfaceView;
+import com.vee.lb.vee.util.TestString;
+import com.vee.lb.vee.view.AutoFitHeightViewPager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -46,6 +56,9 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     private GestureDetector gestureDetector;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FrameLayout frameLayout;
+    private CoordinatorLayout coordinatorLayout;
+    private AutoFitHeightViewPager viewPager;
+    private TabLayout tabLayout;
 
     private String remoteurl = "http://192.168.1.100/6649961-1.flv";
     private final int STATE_SEEKBAR_BUFF_UPDATE = 101;
@@ -58,10 +71,8 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     private final static int UPDATE_CONTROL = 104;
     private final static int INITIALIZE_SURFACE_WIDTH = 105;
 
-    private float gestureoldX;
-    private float gestureoldY;
-    private float gesturenewX;
-    private float gesturenewY;
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> tabstringlist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +81,26 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        final AlphaAnimation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(2000);
 
         init();
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initmedia();
+                //fab.animate()
+                //        .alphaBy(1)
+                //        .alpha(0)
+                //        .setDuration(1000)
+                //        .start();
+                //fab.hide();
+                //initmedia();
             }
         });
+
+
     }
 
     private void init(){
@@ -100,6 +122,9 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         brighttextview = (TextView)findViewById(R.id.vee_player_bright_text);
         collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
         frameLayout = (FrameLayout)findViewById(R.id.vee_player_scrolling_framelayout);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.vee_player_scrolling_coordinatorlayout);
+        viewPager = (AutoFitHeightViewPager)findViewById(R.id.vee_scrolling_player_viewpager);
+        tabLayout = (TabLayout)findViewById(R.id.vee_scrolling_player_tablayout);
     }
 
     private void initialize(){
@@ -109,7 +134,24 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         volumelinearlayout.setVisibility(View.GONE);
         brightlinearlayout.setVisibility(View.GONE);
 
-        gestureDetector = new GestureDetector(this,new VeePlayerGestureListener());
+
+
+        VeeScrollIntroFragment veeScrollIntroFragment = VeeScrollIntroFragment.newInstance(TestString.intro_content_json);
+        CommentsFragment commentsFragment = new CommentsFragment();
+
+        fragmentList.add(veeScrollIntroFragment);
+        fragmentList.add(commentsFragment);
+
+        tabstringlist.add("简介");
+        tabstringlist.add("评论");
+
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        for (int i=0;i<tabstringlist.size();i++)
+            tabLayout.addTab(tabLayout.newTab().setText(tabstringlist.get(i)));
+
+        MainPageFragmentAdapter mainPageFragmentAdapter = new MainPageFragmentAdapter(getSupportFragmentManager(),fragmentList,tabstringlist);
+        viewPager.setAdapter(mainPageFragmentAdapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initmedia(){
@@ -186,43 +228,8 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         });
     }
 
-    private VeePlayerSurfaceView.SurfaceViewListener surfaceviewlistener = new VeePlayerSurfaceView.SurfaceViewListener() {
-        @Override
-        public void gesturedown(MotionEvent event) {
-            gestureoldX = event.getX();
-            gestureoldY = event.getY();
-        }
-
-        @Override
-        public void gesturemove(MotionEvent event) {
-            Log.d(TAG, "onTouch: MOVE");
-            gesturenewX = event.getX();
-            gesturenewY = event.getY();
-            if (gesturenewX > PreInitialize.winrect.width()/2){
-                /**
-                 *set volume
-                 */
-                int curvolume = PreInitialize.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                int percent = curvolume*100/PreInitialize.maxvolume;
-                Log.d(TAG, "onTouch: MOVE " + PreInitialize.winrect.width());
-                volumetextview.setText(String.valueOf(percent));
-                int setting = (int)(gesturenewY - gestureoldY);
-                Log.d(TAG, "onTouch: MOVE " + setting);
-            }else {
-                /**
-                 * set bright
-                 */
-            }
-        }
-
-        @Override
-        public void gestureup(MotionEvent event) {
-            Log.d(TAG, "onTouch: " + "UP");
-
-        }
-    };
-
     private void play(){
+        settoolbarflag(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         updateseeknar = true;
         myhandle.sendEmptyMessage(UPDATE_VIDEO_SEEKBAR);
         playbutton.setBackgroundResource(R.drawable.ic_media_pause);
@@ -234,9 +241,16 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     }
 
     private void pause(){
+        settoolbarflag(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
         updateseeknar = false;
         playbutton.setBackgroundResource(R.drawable.ic_media_play);
         ijkMediaPlayer.pause();
+    }
+
+    private void settoolbarflag(int value){
+        AppBarLayout.LayoutParams params =(AppBarLayout.LayoutParams)collapsingToolbarLayout.getLayoutParams();
+        params.setScrollFlags(value);
+        collapsingToolbarLayout.setLayoutParams(params);
     }
 
     private final Handler myhandle = new Handler() {
@@ -368,25 +382,6 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
                 ijkMediaPlayer.reset();
                 ijkMediaPlayer.release();
             }
-        }
-    }
-
-    private class VeePlayerGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        /** 双击 */
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            Log.d(TAG, "onDoubleTap: ");
-            return true;
-        }
-
-        /** 滑动 */
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
-
-            Log.d(TAG, "onScroll: ");
-            return super.onScroll(e1, e2, distanceX, distanceY);
         }
     }
 

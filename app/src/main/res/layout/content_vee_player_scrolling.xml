@@ -5,13 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.vee.lb.vee.activity.VeePlayerScrollingActivity"
     tools:showIn="@layout/activity_vee_player_scrolling">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.vee.lb.vee.activity.VeePlayerScrollingActivity"
+        android:orientation="vertical">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/vee_scrolling_player_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:tabIndicatorColor="@color/main_page_tag_selected_text_color"
+            app:tabSelectedTextColor="@color/main_page_tag_selected_text_color"
+            app:tabTextColor="@color/main_page_tag_text_color"
+            />
+        <com.vee.lb.vee.view.AutoFitHeightViewPager
+            android:id="@+id/vee_scrolling_player_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.vee.lb.vee.view.AutoFitHeightViewPager>
+    </LinearLayout>
+
+
 
 </android.support.v4.widget.NestedScrollView>

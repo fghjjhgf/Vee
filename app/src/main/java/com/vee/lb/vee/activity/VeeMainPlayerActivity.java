@@ -1,8 +1,10 @@
 package com.vee.lb.vee.activity;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,6 +20,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.vee.lb.vee.R;
+import com.vee.lb.vee.util.PreInitialize;
 
 import java.util.Calendar;
 
@@ -53,6 +56,13 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
     private final static int EMPTY_MES = 200;
     private String remoteurl = "http://192.168.1.100/6649961-1.flv";
 
+    private float oldX = 0;
+    private float oldY = 0;
+    private float newY = 0;
+    private float newX = 0;
+    private int volumevalue = 0;
+    private int brightvalue = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +72,7 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
     }
 
     private void init(){
+        new PreInitialize(this);
         findview();
         getData();
         initlistener();
@@ -171,13 +182,90 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
         surfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        myhandle.sendEmptyMessage(UPDATE_CONTROL);
+                        oldX = event.getX();
+                        oldY = event.getY();
+                        volumevalue = PreInitialize.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                        try{
+                            brightvalue = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+                        }catch (Exception e){
+                        }
+                        Log.d(TAG, "onTouch: ACTION_DOWN " + volumevalue + " " + brightvalue);
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        Log.d(TAG, "onTouch: ACTION_MOVE");
+                        newX = event.getX();
+                        newY = event.getY();
+                        int dis = (int)(newY - oldY);
+                        if (Math.abs(dis) > PreInitialize.dis_of_conflict){
+                            if (newX < PreInitialize.winrect.width()/2) {
+                                /**
+                                 * deal with bright
+                                 */
+                                String str;
+
+                                if (brightvalue <= PreInitialize.maxbright){
+                                    int percent = brightvalue * 100 / PreInitialize.maxbright;
+                                    int add_percent = dis * 100 / PreInitialize.winrect.height();
+                                    percent -= add_percent;
+                                    if (percent > 0 && percent < 100){
+                                        str = String.valueOf(percent) + "%";
+                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS,PreInitialize.maxbright * percent / 100);
+                                    }else if (percent <= 0){
+                                        percent = 0;
+                                        str = String.valueOf(percent) + "%";
+                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS,PreInitialize.maxbright * percent / 100);
+                                    }else {
+                                        percent = 100;
+                                        str = String.valueOf(percent) + "%";
+                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS,PreInitialize.maxbright * percent / 100);
+                                    }
+                                }else {
+                                    str = "100%";
+                                }
+                                volume_bright_textview.setText(str);
+                                volume_bright_imageview.setBackgroundResource(R.drawable.ic_bright);
+                                volume_bright_linearlayout.setVisibility(View.VISIBLE);
+
+
+                            }else if (newX > PreInitialize.winrect.width()/2){
+                                /**
+                                 * deal with volume
+                                 */
+
+                                String str;
+                                Log.d(TAG, "onTouch: volume " + volumevalue + " " + PreInitialize.maxvolume);
+                                if (volumevalue <= PreInitialize.maxvolume){
+                                    int percent = volumevalue * 100 / PreInitialize.maxvolume;
+                                    int add_percent = dis * 100 / PreInitialize.winrect.height();
+                                    percent -= add_percent;
+                                    if (percent > 0 && percent < 100){
+                                        str = String.valueOf(percent) + "%";
+                                        PreInitialize.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, PreInitialize.maxvolume * percent / 100, 0);
+                                    }else if (percent <= 0){
+                                        percent = 0;
+                                        str = String.valueOf(percent) + "%";
+                                        PreInitialize.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+                                    }else {
+                                        percent = 100;
+                                        str = String.valueOf(percent) + "%";
+                                        PreInitialize.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, PreInitialize.maxvolume, 0);
+                                    }
+                                }else {
+                                    str = "100%";
+                                }
+                                volume_bright_textview.setText(str);
+                                volume_bright_imageview.setBackgroundResource(R.drawable.ic_volume);
+                                volume_bright_linearlayout.setVisibility(View.VISIBLE);
+                            }
+                        }
+
                         break;
                     case MotionEvent.ACTION_UP:
+                        Log.d(TAG, "onTouch: ACTION_UP");
+                        volume_bright_linearlayout.setVisibility(View.GONE);
                         break;
                 }
                 return false;
@@ -187,7 +275,6 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
         surfaceView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myhandle.sendEmptyMessage(UPDATE_CONTROL);
             }
         });
 

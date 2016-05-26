@@ -28,7 +28,7 @@
     <dimen name="vee_main_player_volume_linear_height">80dp</dimen>
     <dimen name="vee_main_player_volume_linear_image_height">50dp</dimen>
     <dimen name="vee_main_player_volume_linear_text_size">15dip</dimen>
-
+    <dimen name="appbar_padding_top">8dp</dimen>
 
 
 </resources>
