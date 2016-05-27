@@ -1,5 +1,6 @@
 package com.vee.lb.vee.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +18,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -28,7 +28,6 @@ import com.vee.lb.vee.R;
 import com.vee.lb.vee.adapter.MainPageFragmentAdapter;
 import com.vee.lb.vee.fragment.CommentsFragment;
 import com.vee.lb.vee.fragment.VeeScrollIntroFragment;
-import com.vee.lb.vee.util.PreInitialize;
 import com.vee.lb.vee.util.TestString;
 import com.vee.lb.vee.view.AutoFitHeightViewPager;
 
@@ -60,7 +59,7 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
     private AutoFitHeightViewPager viewPager;
     private TabLayout tabLayout;
 
-    private String remoteurl = "http://192.168.1.100/6649961-1.flv";
+    private String remoteurl = "http://cn-gdfs15-dx.acgvideo.com/vg18/0/4a/7755602-1.flv?expires=1464377400&ssig=n7pQfptRvR1AoEDL5uEOog&oi=244766114&player=1&or=3074230573&rate=0";
     private final int STATE_SEEKBAR_BUFF_UPDATE = 101;
     private final int STATE_SEEKBAR_BUTTON_UPDATE = 102;
     private final String video_buff_bundle = "video_buff_bundle";
@@ -81,30 +80,11 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        final AlphaAnimation animation = new AlphaAnimation(1, 0);
-        animation.setDuration(2000);
 
         init();
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //fab.animate()
-                //        .alphaBy(1)
-                //        .alpha(0)
-                //        .setDuration(1000)
-                //        .start();
-                //fab.hide();
-                //initmedia();
-            }
-        });
-
-
     }
 
     private void init(){
-        new PreInitialize(this);
         findview();
         initialize();
         initlistener();
@@ -224,6 +204,27 @@ public class VeePlayerScrollingActivity extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        fullscreenbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),VeeMainPlayerActivity.class);
+                startActivity(i);
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //fab.animate()
+                //        .alphaBy(1)
+                //        .alpha(0)
+                //        .setDuration(1000)
+                //        .start();
+                fab.hide();
+                initmedia();
             }
         });
     }

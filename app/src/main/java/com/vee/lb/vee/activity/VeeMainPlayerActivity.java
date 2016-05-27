@@ -54,7 +54,7 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
     private final static int INITIALIZE_SURFACE_WIDTH = 105;
     private final static int UPDATE_CONTROL_IM = 106;
     private final static int EMPTY_MES = 200;
-    private String remoteurl = "http://192.168.1.100/6649961-1.flv";
+    private String remoteurl = "http://cn-gdfs15-dx.acgvideo.com/vg18/0/4a/7755602-1.flv?expires=1464377400&ssig=n7pQfptRvR1AoEDL5uEOog&oi=244766114&player=1&or=3074230573&rate=0";
 
     private float oldX = 0;
     private float oldY = 0;
@@ -72,7 +72,6 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
     }
 
     private void init(){
-        new PreInitialize(this);
         findview();
         getData();
         initlistener();
@@ -189,40 +188,40 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
                         oldX = event.getX();
                         oldY = event.getY();
                         volumevalue = PreInitialize.audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                        try{
+                        try {
                             brightvalue = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
-                        }catch (Exception e){
+                        } catch (Exception e) {
                         }
                         Log.d(TAG, "onTouch: ACTION_DOWN " + volumevalue + " " + brightvalue);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         newX = event.getX();
                         newY = event.getY();
-                        int dis = (int)(newY - oldY);
-                        if (Math.abs(dis) > PreInitialize.dis_of_conflict){
-                            if (newX < PreInitialize.winrect.width()/2) {
+                        int dis = (int) (newY - oldY);
+                        if (Math.abs(dis) > PreInitialize.dis_of_conflict) {
+                            if (newX < PreInitialize.winrect.height() / 2) {
                                 /**
                                  * deal with bright
                                  */
                                 String str;
 
-                                if (brightvalue <= PreInitialize.maxbright){
+                                if (brightvalue <= PreInitialize.maxbright) {
                                     int percent = brightvalue * 100 / PreInitialize.maxbright;
                                     int add_percent = dis * 100 / PreInitialize.winrect.height();
                                     percent -= add_percent;
-                                    if (percent > 0 && percent < 100){
+                                    if (percent > 0 && percent < 100) {
                                         str = String.valueOf(percent) + "%";
-                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS,PreInitialize.maxbright * percent / 100);
-                                    }else if (percent <= 0){
+                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, PreInitialize.maxbright * percent / 100);
+                                    } else if (percent <= 0) {
                                         percent = 0;
                                         str = String.valueOf(percent) + "%";
-                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS,PreInitialize.maxbright * percent / 100);
-                                    }else {
+                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, PreInitialize.maxbright * percent / 100);
+                                    } else {
                                         percent = 100;
                                         str = String.valueOf(percent) + "%";
-                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS,PreInitialize.maxbright * percent / 100);
+                                        Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, PreInitialize.maxbright * percent / 100);
                                     }
-                                }else {
+                                } else {
                                     str = "100%";
                                 }
                                 volume_bright_textview.setText(str);
@@ -230,30 +229,30 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
                                 volume_bright_linearlayout.setVisibility(View.VISIBLE);
 
 
-                            }else if (newX > PreInitialize.winrect.width()/2){
+                            } else if (newX > PreInitialize.winrect.height() / 2) {
                                 /**
                                  * deal with volume
                                  */
 
                                 String str;
                                 Log.d(TAG, "onTouch: volume " + volumevalue + " " + PreInitialize.maxvolume);
-                                if (volumevalue <= PreInitialize.maxvolume){
+                                if (volumevalue <= PreInitialize.maxvolume) {
                                     int percent = volumevalue * 100 / PreInitialize.maxvolume;
                                     int add_percent = dis * 100 / PreInitialize.winrect.height();
                                     percent -= add_percent;
-                                    if (percent > 0 && percent < 100){
+                                    if (percent > 0 && percent < 100) {
                                         str = String.valueOf(percent) + "%";
                                         PreInitialize.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, PreInitialize.maxvolume * percent / 100, 0);
-                                    }else if (percent <= 0){
+                                    } else if (percent <= 0) {
                                         percent = 0;
                                         str = String.valueOf(percent) + "%";
                                         PreInitialize.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-                                    }else {
+                                    } else {
                                         percent = 100;
                                         str = String.valueOf(percent) + "%";
                                         PreInitialize.audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, PreInitialize.maxvolume, 0);
                                     }
-                                }else {
+                                } else {
                                     str = "100%";
                                 }
                                 volume_bright_textview.setText(str);
@@ -289,6 +288,13 @@ public class VeeMainPlayerActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
+            }
+        });
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

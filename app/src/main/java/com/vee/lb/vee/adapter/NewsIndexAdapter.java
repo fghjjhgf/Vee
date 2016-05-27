@@ -1,6 +1,7 @@
 package com.vee.lb.vee.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vee.lb.vee.R;
+import com.vee.lb.vee.activity.WebContentActivity;
 import com.vee.lb.vee.util.NewsIndexItem;
 import com.vee.lb.vee.view.AutoFitGridView;
 
@@ -51,7 +53,8 @@ public class NewsIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private View.OnClickListener textonclicklistener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent i = new Intent(context, WebContentActivity.class);
+            context.startActivity(i);
         }
     };
 

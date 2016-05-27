@@ -1,13 +1,17 @@
 package com.vee.lb.vee.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vee.lb.vee.R;
+import com.vee.lb.vee.activity.VeePlayerScrollingActivity;
 import com.vee.lb.vee.util.BangumiIndexItem;
 
 import java.util.List;
@@ -20,11 +24,14 @@ public class BangumiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final int TYPE_WEEK = 101;
     private final int TYPE_BANGUMI = 102;
     private final int TYPE_DEFAULT = 1000;
+    private View.OnClickListener onClickListener;
 
     private List<BangumiIndexItem> bangumiIndexList;
+    private Context context;
 
-    public BangumiListAdapter(List<BangumiIndexItem> l) {
+    public BangumiListAdapter(Context context,List<BangumiIndexItem> l) {
         this.bangumiIndexList = l;
+        this.context = context;
     }
 
     @Override
@@ -53,6 +60,13 @@ public class BangumiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 BangumiName bangumiName = (BangumiName)holder;
                 bangumiName.banguymi_textview.setText(bangumiIndexList.get(position-1).lefttext);
                 bangumiName.episode_textview.setText(bangumiIndexList.get(position-1).righttext);
+                bangumiName.linearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, VeePlayerScrollingActivity.class);
+                        context.startActivity(i);
+                    }
+                });
             }
 
         }
@@ -90,10 +104,13 @@ public class BangumiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class BangumiName extends RecyclerView.ViewHolder{
         public TextView banguymi_textview;
         public TextView episode_textview;
+        public LinearLayout linearLayout;
         public BangumiName(View itemView) {
             super(itemView);
             banguymi_textview = (TextView)itemView.findViewById(R.id.bangumi_index_bangumi_name);
             episode_textview = (TextView)itemView.findViewById(R.id.bangumi_index_bangumi_episodes);
+            linearLayout = (LinearLayout)itemView.findViewById(R.id.bangumi_index_linearlayout);
         }
     }
+
 }

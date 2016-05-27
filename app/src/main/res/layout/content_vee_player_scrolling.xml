@@ -21,6 +21,7 @@
             app:tabSelectedTextColor="@color/main_page_tag_selected_text_color"
             app:tabTextColor="@color/main_page_tag_text_color"
             />
+
         <com.vee.lb.vee.view.AutoFitHeightViewPager
             android:id="@+id/vee_scrolling_player_viewpager"
             android:layout_width="match_parent"

@@ -38,7 +38,7 @@ public class NewsIndexFragment extends Fragment{
     private void init(){
         findview();
         getData();
-        NewsIndexAdapter newsIndexAdapter = new NewsIndexAdapter(getContext(),newsIndexItemList);
+        NewsIndexAdapter newsIndexAdapter = new NewsIndexAdapter(getActivity(),newsIndexItemList);
         recyclerView.setAdapter(newsIndexAdapter);
     }
 

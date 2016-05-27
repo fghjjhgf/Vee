@@ -39,7 +39,7 @@ public class BangumiFinFragment extends Fragment {
     private void init(){
         findview();
         getData();
-        BangumiFinAdapter bangumiFinAdapter = new BangumiFinAdapter(getContext(),bangumiFinItemList);
+        BangumiFinAdapter bangumiFinAdapter = new BangumiFinAdapter(getActivity(),bangumiFinItemList);
         recyclerview.setAdapter(bangumiFinAdapter);
         recyclerview.setHeadImageID(headreslist);
     }

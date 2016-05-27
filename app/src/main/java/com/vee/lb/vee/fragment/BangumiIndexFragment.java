@@ -44,7 +44,8 @@ public class BangumiIndexFragment extends Fragment {
     private void init(){
         getData();
         findview();
-        BangumiListAdapter bangumiListAdapter = new BangumiListAdapter(bangumiIndexList);
+        BangumiListAdapter bangumiListAdapter = new BangumiListAdapter(getActivity(),bangumiIndexList);
+
         recyclerView.setAdapter(bangumiListAdapter);
         recyclerView.setHeadImageID(headreslist);
     }

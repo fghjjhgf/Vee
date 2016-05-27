@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private String TAG = "MainActivity";
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
@@ -53,19 +55,18 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         //初始化
         new PreInitialize(this);
+        Log.d(TAG, "init: " + PreInitialize.winrect.width());
         //设置标签
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         for (int i=0;i<m_main_page_tage_title_List.size();i++)
             tabLayout.addTab(tabLayout.newTab().setText(m_main_page_tage_title_List.get(i)));
 
-        BangumiIndexFragment bangumiIndexFragment1 = new BangumiIndexFragment();
-        BangumiIndexFragment bangumiIndexFragment2 = new BangumiIndexFragment();
-        BangumiIndexFragment bangumiIndexFragment3 = new BangumiIndexFragment();
+        BangumiIndexFragment bangumiIndexFragment = new BangumiIndexFragment();
         BangumiFinFragment bangumiFinFragment = new BangumiFinFragment();
         NewsIndexFragment newsIndexFragment = new NewsIndexFragment();
-        fragmentList.add(bangumiIndexFragment3);
-        fragmentList.add(newsIndexFragment);
+        fragmentList.add(bangumiIndexFragment);
         fragmentList.add(bangumiFinFragment);
+        fragmentList.add(newsIndexFragment);
 
 
         MainPageFragmentAdapter mainPageFragmentAdapter = new MainPageFragmentAdapter(getSupportFragmentManager(),fragmentList,m_main_page_tage_title_List);

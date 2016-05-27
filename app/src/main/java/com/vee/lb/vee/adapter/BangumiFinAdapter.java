@@ -1,13 +1,16 @@
 package com.vee.lb.vee.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.vee.lb.vee.R;
+import com.vee.lb.vee.activity.VeePlayerScrollingActivity;
 import com.vee.lb.vee.util.BangumiFinItem;
 import com.vee.lb.vee.view.AutoFitGridView;
 
@@ -40,6 +43,13 @@ public class BangumiFinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             bangumiFinItemVeiwHolder.tag_textview.setText(bangumiFinItemList.get(position - 1).title_name);
             BangumiFinGridViewAdapter bangumiFinGridViewAdapter = new BangumiFinGridViewAdapter(context,bangumiFinItemList.get(position - 1).bangumiFinGridLayoutItemList);
             bangumiFinItemVeiwHolder.gridView.setAdapter(bangumiFinGridViewAdapter);
+            bangumiFinItemVeiwHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent i = new Intent(context, VeePlayerScrollingActivity.class);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
