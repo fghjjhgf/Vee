@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/news_index_gridview_item_imageview"
-        android:layout_height="80dp"
-        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_width="120dp"
         android:scaleType="centerCrop"/>
 
 </LinearLayout>

@@ -15,7 +15,9 @@
         <TextView
             android:id="@+id/news_index_item_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:typeface="serif"
+            android:textSize="@dimen/news_index_title_textsize"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -24,49 +26,57 @@
                 android:text="@string/new_index_author_str"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/news_index_subhead_textsize"
                 android:layout_alignParentLeft="true"/>
             <TextView
                 android:id="@+id/up_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/news_index_subhead_textsize"
                 android:layout_toRightOf="@id/up_author_str"/>
             <TextView
                 android:id="@+id/glance_times_str"
                 android:text="@string/new_index_glance_str"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/news_index_subhead_textsize"
                 android:layout_toRightOf="@id/up_author"
                 android:layout_marginLeft="10dp"/>
             <TextView
                 android:id="@+id/glance_times"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/news_index_subhead_textsize"
                 android:layout_toRightOf="@id/glance_times_str"/>
             <TextView
                 android:id="@+id/update_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/news_index_subhead_textsize"
                 android:layout_alignParentRight="true"/>
             <TextView
                 android:id="@+id/update_time_str"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/new_index_date_str"
+                android:textSize="@dimen/news_index_subhead_textsize"
                 android:layout_toLeftOf="@id/update_time"/>
         </RelativeLayout>
         <TextView
             android:id="@+id/news_index_item_introduce"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/news_index_content_textsize"/>
     </LinearLayout>
     <com.vee.lb.vee.view.AutoFitGridView
         android:id="@+id/news_index_item_pic_container"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:numColumns="3"
-        android:columnWidth="80dp"
-        android:horizontalSpacing="@dimen/bangumi_fin_gridview_Spacing"
-        android:verticalSpacing="@dimen/bangumi_fin_gridview_Spacing"
+        android:columnWidth="0dp"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="@dimen/bangumi_fin_margin"
         android:layout_marginRight="@dimen/bangumi_fin_margin"/>
     <View

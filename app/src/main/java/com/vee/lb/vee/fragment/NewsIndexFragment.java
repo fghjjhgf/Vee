@@ -1,5 +1,6 @@
 package com.vee.lb.vee.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -7,9 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.vee.lb.vee.R;
+import com.vee.lb.vee.activity.PicGalleryActivity;
 import com.vee.lb.vee.adapter.NewsIndexAdapter;
+import com.vee.lb.vee.util.CommonString;
 import com.vee.lb.vee.util.NewsIndexItem;
 import com.vee.lb.vee.util.TestString;
 
@@ -39,6 +43,14 @@ public class NewsIndexFragment extends Fragment{
         findview();
         getData();
         NewsIndexAdapter newsIndexAdapter = new NewsIndexAdapter(getActivity(),newsIndexItemList);
+        newsIndexAdapter.setImageItemClick(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity().getApplicationContext(),PicGalleryActivity.class);
+                i.putStringArrayListExtra(CommonString.GALLERY_IMAGELIST,newsIndexItemList.get(position).img_src_list);
+                startActivity(i);
+            }
+        });
         recyclerView.setAdapter(newsIndexAdapter);
     }
 
@@ -63,7 +75,7 @@ public class NewsIndexFragment extends Fragment{
 
                     JSONObject jsonObject1 = (JSONObject)jsonArray1.get(5);
 
-                    List<String> imglist = new ArrayList<>();
+                    ArrayList<String> imglist = new ArrayList<>();
                     JSONArray jsonArray2 = jsonObject1.getJSONArray("image_list");
                     for (int k=0;k<jsonArray2.length();k++){
                         imglist.add(jsonArray2.getString(k));

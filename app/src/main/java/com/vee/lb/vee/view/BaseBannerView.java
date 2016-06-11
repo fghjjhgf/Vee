@@ -77,8 +77,6 @@ public class BaseBannerView extends RecyclerView.ViewHolder{
 
         m_llDotGroup = (LinearLayout)m_mainView.findViewById(R.id.banner_ll_dot_group);
 
-        imageViewContainer = new ArrayList<ImageView>();
-
 
         for (int i=0;i<m_mmb_Banner_ImageIDs.size()+2;i++)
         {
@@ -120,7 +118,7 @@ public class BaseBannerView extends RecyclerView.ViewHolder{
 
 
         m_viewPager.setAdapter(new BannerPagerBanner(imageViewContainer));
-        m_viewPager.setOnPageChangeListener(new BannerPageChangeListener());
+        m_viewPager.addOnPageChangeListener(new BannerPageChangeListener());
 
         m_llDotGroup.getChildAt(0).setEnabled(true);
         m_viewPager.setCurrentItem(1);

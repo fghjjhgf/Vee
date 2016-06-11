@@ -42,22 +42,20 @@ public class NewsIndexGridViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageview;
+       ImageView imageview;
 
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.news_index_gridview_item,null);
-            imageview = (ImageView)convertView.findViewById(R.id.news_index_gridview_item_imageview);
-            convertView.setTag(imageview);
-        }else {
-            imageview = (ImageView)convertView.getTag();
-        }
+       if (convertView == null) {
+           LayoutInflater layoutInflater = (LayoutInflater) context
+                   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+           convertView = layoutInflater.inflate(R.layout.news_index_gridview_item,null);
+           imageview = (ImageView)convertView.findViewById(R.id.news_index_gridview_item_imageview);
+           convertView.setTag(imageview);
+       }else {
+           imageview = (ImageView)convertView.getTag();
+       }
 
-        PreInitialize.imageLoader.displayImage(imglist.get(position), imageview);
-        if (onClickListener != null){
-            imageview.setOnClickListener(onClickListener);
-        }
+       PreInitialize.imageLoader.displayImage(imglist.get(position), imageview);
+
         return convertView;
     }
 
