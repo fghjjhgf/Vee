@@ -5,5 +5,7 @@ package com.vee.lb.vee.util;
  */
 public class CommonString {
     public static String GALLERY_IMAGELIST = "gallery_imagelist";
+    public static String APP_PIC_PATH = "/Vee/picture/";
+
 
 }
